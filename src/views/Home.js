@@ -9,7 +9,7 @@ const H1 = styled.h1`
 
 const Home = () => (
   <div>
-    <H1>React application</H1>
+    <H1>Currency Exchange</H1>
     <img src="logo192.png" alt="" />
   </div>
 );
