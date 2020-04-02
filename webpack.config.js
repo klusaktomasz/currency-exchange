@@ -22,20 +22,24 @@ module.exports = (_env, argv) => {
         {
           test: /\.js?$/,
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true,
-              cacheCompression: false,
-              envName: isDev ? 'development' : 'production',
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true,
+                cacheCompression: false,
+                envName: isDev ? 'development' : 'production',
+              },
             },
-          },
+            {
+              loader: 'eslint-loader'
+            }
+          ],
         },
         {
-          test: /\.js?$/,
-          exclude: /node_modules/,
-          use: 'eslint-loader',
-        },
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader']
+        }
       ],
     },
     plugins: [
