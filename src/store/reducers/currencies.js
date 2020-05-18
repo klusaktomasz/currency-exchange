@@ -1,12 +1,23 @@
-export default (state = [], action) => {
+export default (
+  state = {
+    isFetching: false,
+  },
+  action
+) => {
   switch (action.type) {
-    case 'ADD_CURRENCY':
-      return [
+    case 'REQUEST_CURRENCIES_LIST':
+      return {
         ...state,
-        {
-          id: action.id,
-        },
-      ];
+        isFetching: true,
+      };
+
+    case 'RECEIVE_CURRENCIES_LIST':
+      return {
+        ...state,
+        isFetching: false,
+        list: action.currencies,
+        lastUpdated: action.lastUpdated,
+      };
     default:
       return state;
   }
