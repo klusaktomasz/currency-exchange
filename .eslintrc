@@ -10,7 +10,8 @@
   "globals": {
     "window": true,
     "document": true,
-    "fetch": true
+    "fetch": true,
+    "localStorage": true
   },
   "settings": {
     "import/resolver": {
