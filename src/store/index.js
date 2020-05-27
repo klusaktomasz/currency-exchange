@@ -1,5 +1,8 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import rootReducers from './reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import currenciesReducer from './reducers/currencies';
 
-export default createStore(rootReducers, applyMiddleware(thunkMiddleware));
+export default configureStore({
+  reducer: {
+    currencies: currenciesReducer,
+  },
+});
