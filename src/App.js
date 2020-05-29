@@ -1,10 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // Styles
 import { createGlobalStyle } from 'styled-components';
 import 'normalize.css';
 import colors from './utils/colors';
+
+// Dispatches
+import { getCurrenciesList } from './store/reducers/currencies';
 
 // Routes
 import Home from './views/Home';
@@ -23,13 +27,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = () => (
-  <BrowserRouter>
-    <GlobalStyle />
-    <Switch>
-      <Route path="/" component={Home} />
-    </Switch>
-  </BrowserRouter>
-);
+const App = () => {
+  const dispatch = useDispatch();
+  dispatch(getCurrenciesList());
 
+  return (
+    <BrowserRouter>
+      <GlobalStyle />
+      <Switch>
+        <Route path="/" component={Home} />
+      </Switch>
+    </BrowserRouter>
+  );
+};
 export default App;
