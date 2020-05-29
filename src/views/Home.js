@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  fetchCurrenciesList,
+  getCurrenciesList,
   selectCurrenciesList,
   selectFetchingState,
 } from '../store/reducers/currencies';
@@ -28,7 +28,7 @@ const Home = () => {
         <br />
         {JSON.stringify(currenciesList)}
       </div>
-      <button type="button" onClick={() => dispatch(fetchCurrenciesList())}>
+      <button type="button" onClick={() => dispatch(getCurrenciesList())}>
         Fetch api
       </button>
     </div>
