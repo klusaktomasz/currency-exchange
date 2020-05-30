@@ -9,6 +9,7 @@ import colors from './utils/colors';
 
 // Dispatches
 import { getCurrenciesList } from './store/reducers/currencies';
+import { getStateFromLocal } from './store/reducers/rates';
 
 // Routes
 import Home from './views/Home';
@@ -30,6 +31,8 @@ const GlobalStyle = createGlobalStyle`
 const App = () => {
   const dispatch = useDispatch();
   dispatch(getCurrenciesList());
+  dispatch(getStateFromLocal());
+  // dispatch(fetchRate('USD'));
 
   return (
     <BrowserRouter>
