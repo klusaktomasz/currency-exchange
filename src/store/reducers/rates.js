@@ -23,6 +23,19 @@ export const ratesSlice = createSlice({
     replaceRates: (state, action) => {
       state.rates = action.payload;
     },
+    addRate: (state, action) => {
+      const { base, date, rates } = action.payload;
+
+      if (typeof state.rates[base] === 'undefined') {
+        state.rates[base] = {};
+        state.rates[base][date] = {};
+      }
+
+      state.rates[base][date] = {
+        ...JSON.parse(JSON.stringify(state.rates[base][date])),
+        ...rates,
+      };
+    },
   },
 });
 
@@ -31,6 +44,7 @@ export const {
   setFetchingState,
   saveStateToLocal,
   replaceRates,
+  addRate,
 } = ratesSlice.actions;
 
 export const getStateFromLocal = () => (dispatch) => {
@@ -52,12 +66,16 @@ export const fetchRate = (from, to = null, date = Date.now()) => async (
     const res = await fetch(createAPIURLToRate(from, to, date));
     const data = await res.json();
 
-    console.log(data);
-  } catch {
+    dispatch(addRate(data));
+  } catch (e) {
     dispatch(setFetchingError(true));
   }
 
   dispatch(setFetchingState(false));
 };
+
+export const selectCurrenciesList = (state) => state.rates.list;
+export const selectFetchingState = (state) => state.rates.isFetching;
+export const selectAllRates = (state) => state.rates.rates;
 
 export default ratesSlice.reducer;
