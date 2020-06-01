@@ -18,7 +18,7 @@ export const ratesSlice = createSlice({
       state.isFetching = action.payload;
     },
     saveStateToLocal: (state) => {
-      localStorage.setItem(RATES_LOCAL_HOOK, state.rates);
+      localStorage.setItem(RATES_LOCAL_HOOK, JSON.stringify(state.rates));
     },
     replaceRates: (state, action) => {
       state.rates = action.payload;
@@ -66,7 +66,8 @@ export const fetchRate = (from, to = null, date = Date.now()) => async (
     const res = await fetch(createAPIURLToRate(from, to, date));
     const data = await res.json();
 
-    dispatch(addRate(data)).then(() => saveStateToLocal());
+    dispatch(addRate(data));
+    dispatch(saveStateToLocal());
   } catch (e) {
     dispatch(setFetchingError(true));
   }
