@@ -66,7 +66,7 @@ export const fetchRate = (from, to = null, date = Date.now()) => async (
     const res = await fetch(createAPIURLToRate(from, to, date));
     const data = await res.json();
 
-    dispatch(addRate(data));
+    dispatch(addRate(data)).then(() => saveStateToLocal());
   } catch (e) {
     dispatch(setFetchingError(true));
   }
