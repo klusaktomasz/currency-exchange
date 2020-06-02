@@ -11,7 +11,7 @@ const HomeContainer = styled.div`
 
 const H1 = styled.h1`
   font-weight: 500;
-  font-size: 2em;
+  font-size: 3em;
   text-align: center;
   line-height: 1em;
   width: 100%;
