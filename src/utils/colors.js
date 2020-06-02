@@ -4,5 +4,5 @@ export default {
 
   black: '#000',
   blackSoft: '#272525',
-  gray: '#6c7589'
+  gray: '#6c7589',
 };

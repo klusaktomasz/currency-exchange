@@ -25,11 +25,13 @@ const Divider = styled.span`
 
 const Home = () => {
   return (
-    <HomeContainer>
-      <H1>
-        Currency <Divider>Exchange</Divider>
-      </H1>
-    </HomeContainer>
+    <>
+      <HomeContainer>
+        <H1>
+          Currency <Divider>Exchange</Divider>
+        </H1>
+      </HomeContainer>
+    </>
   );
 };
 
