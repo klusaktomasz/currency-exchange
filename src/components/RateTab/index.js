@@ -41,7 +41,7 @@ const RateValue = styled.div`
   text-align: right;
 `;
 
-const CurrencyRateTab = (props) => {
+const RateTab = (props) => {
   const { from, to, rate } = props;
 
   return (
@@ -54,10 +54,10 @@ const CurrencyRateTab = (props) => {
   );
 };
 
-CurrencyRateTab.propTypes = {
+RateTab.propTypes = {
   from: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   rate: PropTypes.number.isRequired,
 };
 
-export default CurrencyRateTab;
+export default RateTab;
