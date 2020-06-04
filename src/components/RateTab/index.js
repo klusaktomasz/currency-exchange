@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
+import loadingMixin from '../../mixins/loading';
 
 const Wrapper = styled.div`
   font-size: 1em;
   padding: 0.5em;
   width: 200px;
+  display: flex;
+  flex-direction: column;
 
   &:before,
   &:after {
@@ -38,12 +42,39 @@ const RateName = styled.h2`
 const RateValue = styled.div`
   font-size: 2em;
   font-weight: 700;
-  text-align: right;
+  margin-left: auto;
+`;
+
+const RateNameLoading = styled(RateName)`
+  ${loadingMixin}
+  width: 75px;
+  height: 1em;
+`;
+
+const RateValueLoading = styled(RateValue)`
+  ${loadingMixin}
+  width: 100px;
+  height: 1em;
 `;
 
 const RateTab = (props) => {
   const { from, to, rate } = props;
 
+  // Check if passed params, if no show loading state.
+  if (
+    typeof from === 'undefined' ||
+    typeof to === 'undefined' ||
+    typeof rate === 'undefined'
+  ) {
+    return (
+      <Wrapper>
+        <RateNameLoading />
+        <RateValueLoading />
+      </Wrapper>
+    );
+  }
+
+  // Render if all params passed (from, to, rate).
   return (
     <Wrapper>
       <RateName>
@@ -55,9 +86,15 @@ const RateTab = (props) => {
 };
 
 RateTab.propTypes = {
-  from: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  rate: PropTypes.number.isRequired,
+  from: PropTypes.string,
+  to: PropTypes.string,
+  rate: PropTypes.number,
+};
+
+RateTab.defaultProps = {
+  from: undefined,
+  to: undefined,
+  rate: undefined,
 };
 
 export default RateTab;

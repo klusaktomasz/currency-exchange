@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// import RateTab from '../components/RateTab';
+
 const HomeContainer = styled.div`
   min-height: 100vh;
   width: 100%;
