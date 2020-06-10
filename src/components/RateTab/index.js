@@ -57,9 +57,7 @@ const RateValueLoading = styled(RateValue)`
   height: 1em;
 `;
 
-const RateTab = (props) => {
-  const { from, to, rate } = props;
-
+const RateTab = ({ from, to, rate }) => {
   // Check if passed params, if no show loading state.
   if (
     typeof from === 'undefined' ||
