@@ -9,7 +9,7 @@ import colors from './utils/colors';
 
 // Dispatches
 import { getCurrenciesList } from './store/reducers/currencies';
-import { getStateFromLocal, fetchRate } from './store/reducers/rates';
+import { getStateFromLocal } from './store/reducers/rates';
 
 // Routes
 import Home from './views/Home';
@@ -33,7 +33,6 @@ const App = () => {
   useEffect(() => {
     dispatch(getCurrenciesList());
     dispatch(getStateFromLocal());
-    dispatch(fetchRate('USD'));
   }, []);
 
   return (

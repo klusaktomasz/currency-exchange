@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   width: 200px;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   &:before,
   &:after {

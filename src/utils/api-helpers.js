@@ -46,3 +46,5 @@ export const createAPIURLToRate = (from, to, date) => {
 
   return APIURL.toString();
 };
+
+export const formatDate = (date) => dateFormatter.format(date);

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// import RateTab from '../components/RateTab';
+import RateTabs from '../components/RateTabs';
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -25,6 +25,12 @@ const Divider = styled.span`
   font-size: 0.75em;
 `;
 
+const FixedRateTabs = styled(RateTabs)`
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+
 const Home = () => {
   return (
     <>
@@ -33,6 +39,7 @@ const Home = () => {
           Currency <Divider>Exchange</Divider>
         </H1>
       </HomeContainer>
+      <FixedRateTabs from="USD" to={['PLN', 'EUR']} date={Date.now()} />
     </>
   );
 };

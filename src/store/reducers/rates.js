@@ -28,6 +28,9 @@ export const ratesSlice = createSlice({
 
       if (typeof state.rates[base] === 'undefined') {
         state.rates[base] = {};
+      }
+
+      if (typeof state.rates[base][date] === 'undefined') {
         state.rates[base][date] = {};
       }
 
@@ -70,6 +73,7 @@ export const fetchRate = (from, to = null, date = Date.now()) => async (
     dispatch(saveStateToLocal());
   } catch (e) {
     dispatch(setFetchingError(true));
+    console.error(e);
   }
 
   dispatch(setFetchingState(false));
