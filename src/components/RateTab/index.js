@@ -7,10 +7,11 @@ import loadingMixin from '../../mixins/loading';
 const Wrapper = styled.div`
   font-size: 1em;
   padding: 0.5em;
-  width: 200px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   position: relative;
+  background: linear-gradient(-90deg, transparent, rgba(255, 255, 255, 1));
 
   &:before,
   &:after {
