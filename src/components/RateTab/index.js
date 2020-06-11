@@ -59,7 +59,7 @@ const RateValueLoading = styled(RateValue)`
   height: 1em;
 `;
 
-const RateTab = ({ from, to, rate }) => {
+const RateTab = ({ from, to, rate, className }) => {
   // Check if passed params, if no show loading state.
   if (
     typeof from === 'undefined' ||
@@ -67,7 +67,7 @@ const RateTab = ({ from, to, rate }) => {
     typeof rate === 'undefined'
   ) {
     return (
-      <Wrapper>
+      <Wrapper className={className}>
         <RateNameLoading />
         <RateValueLoading />
       </Wrapper>
@@ -76,7 +76,7 @@ const RateTab = ({ from, to, rate }) => {
 
   // Render if all params passed (from, to, rate).
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <RateName>
         {from} / {to}
       </RateName>

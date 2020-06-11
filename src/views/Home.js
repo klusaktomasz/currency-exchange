@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import RateTabs from '../components/RateTabs';
+
+import DEFAULT_RATES from '../config/homeRates';
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -32,6 +34,28 @@ const FixedRateTabs = styled(RateTabs)`
 `;
 
 const Home = () => {
+  const [renderRateTabs, setRenderRateTabs] = useState(false);
+  const [ratesTo, setRatesTo] = useState(DEFAULT_RATES.to);
+
+  const shouldRenderTabs = () => {
+    setRenderRateTabs(window.innerWidth >= 400);
+
+    const rateTabsAmount = Math.floor(window.innerWidth / 200);
+    setRatesTo(DEFAULT_RATES.to.slice(0, rateTabsAmount));
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', shouldRenderTabs);
+
+    return () => {
+      window.removeEventListener('resize', shouldRenderTabs);
+    };
+  });
+
+  useEffect(() => {
+    shouldRenderTabs();
+  }, []);
+
   return (
     <>
       <HomeContainer>
@@ -39,7 +63,13 @@ const Home = () => {
           Currency <Divider>Exchange</Divider>
         </H1>
       </HomeContainer>
-      <FixedRateTabs from="USD" to={['PLN', 'EUR']} date={Date.now()} />
+      {renderRateTabs ? (
+        <FixedRateTabs
+          from={DEFAULT_RATES.from}
+          to={ratesTo}
+          date={Date.now()}
+        />
+      ) : null}
     </>
   );
 };

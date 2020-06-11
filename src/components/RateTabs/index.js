@@ -10,9 +10,13 @@ import RateTab from '../RateTab';
 
 const Wrapper = styled.div`
   display: flex;
+  width: 100%;
 `;
 
-// TODO(@klusaktomasz): Add media queries.
+const FilledTab = styled(RateTab)`
+  flex: 1 1 auto;
+`;
+
 const RateTabs = ({ className, from, to, date }) => {
   const dispatch = useDispatch();
   const formattedDate = formatDate(date);
@@ -32,7 +36,7 @@ const RateTabs = ({ className, from, to, date }) => {
     else currencies = to;
 
     return currencies.map((curr) => (
-      <RateTab
+      <FilledTab
         key={`${from}/${curr}`}
         from={from}
         to={curr}
