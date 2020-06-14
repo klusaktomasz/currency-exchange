@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import RateTabs from '../components/RateTabs';
+import ExchangeForm from '../components/ExchangeForm';
 
 import DEFAULT_RATES from '../config/homeRates';
 
@@ -11,6 +12,7 @@ const HomeContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 const H1 = styled.h1`
@@ -62,6 +64,7 @@ const Home = () => {
         <H1>
           Currency <Divider>Exchange</Divider>
         </H1>
+        <ExchangeForm />
       </HomeContainer>
       {renderRateTabs ? (
         <FixedRateTabs
