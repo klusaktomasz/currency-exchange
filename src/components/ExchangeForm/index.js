@@ -10,6 +10,10 @@ import { DEFAULT_EXCHANGE } from '../../config';
 const Form = styled.form`
   color: ${colors.black};
   display: flex;
+
+  @media (max-width: 680px) {
+    flex-direction: column;
+  }
 `;
 
 const Box = styled.div`
@@ -86,7 +90,7 @@ const ExchangeForm = () => {
           />
         </Label>
         <Label>
-          Amount
+          Exchanged Amount
           <OutputAmount>1.00</OutputAmount>
         </Label>
       </Box>
