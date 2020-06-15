@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import RateTabs from '../components/RateTabs';
 import ExchangeForm from '../components/ExchangeForm';
 
-import DEFAULT_RATES from '../config/homeRates';
+import { DEFAULT_RATES } from '../config';
 
 const HomeContainer = styled.div`
   min-height: 100vh;

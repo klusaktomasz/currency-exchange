@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import ReactSelect from 'react-select';
+import { useSelector } from 'react-redux';
 import colors from '../../utils/colors';
 import inputMixin from '../../mixins/input';
+
+import { DEFAULT_EXCHANGE } from '../../config';
 
 const Form = styled.form`
   color: ${colors.black};
@@ -16,6 +20,7 @@ const Label = styled.label`
   display: flex;
   flex-direction: column;
   font-size: 1em;
+  margin-bottom: 2em;
 `;
 
 const InputAmount = styled.input`
@@ -27,10 +32,41 @@ const OutputAmount = styled.output`
   background: ${colors.whiteSoftDark};
 `;
 
+const CurrenciesSelect = styled(ReactSelect)`
+  .react-select__control {
+    ${inputMixin}
+  }
+
+  .react-select__value-container {
+    padding: 0;
+  }
+
+  .react-select__indicators {
+    display: none;
+  }
+`;
+
 const ExchangeForm = () => {
+  const currenciesOptions = useSelector((state) => {
+    const { list } = state.currencies;
+
+    return Object.entries(list).map((el) => ({
+      value: el[0],
+      label: `(${el[0]}) ${el[1]}`,
+    }));
+  });
+
   return (
     <Form>
       <Box>
+        <Label>
+          From
+          <CurrenciesSelect
+            options={currenciesOptions}
+            defaultValue={DEFAULT_EXCHANGE.from}
+            classNamePrefix="react-select"
+          />
+        </Label>
         <Label>
           Amount
           {/*
@@ -41,6 +77,14 @@ const ExchangeForm = () => {
         </Label>
       </Box>
       <Box>
+        <Label>
+          To
+          <CurrenciesSelect
+            options={currenciesOptions}
+            defaultValue={DEFAULT_EXCHANGE.to}
+            classNamePrefix="react-select"
+          />
+        </Label>
         <Label>
           Amount
           <OutputAmount>1.00</OutputAmount>

@@ -4,10 +4,10 @@ import colors from '../utils/colors';
 export default css`
   background: ${colors.white};
   border: 2px solid ${colors.graySoft};
-  font: 1em 700 'Roboto', sans-serif;
+  font: 700 1em 'Roboto', sans-serif;
   padding: 0.75em 0.5em;
   border-radius: 4px;
-  min-width: 240px;
+  min-width: 260px;
   margin-top: 8px;
 
   &:focus {
