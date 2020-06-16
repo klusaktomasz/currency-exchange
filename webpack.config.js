@@ -14,9 +14,8 @@ module.exports = (_env, argv) => {
     output: {
       path: path.resolve(__dirname, 'docs'),
       filename: 'js/[name].[contenthash].js',
-      publicPath: '/',
+      publicPath: './',
     },
-
     module: {
       rules: [
         {

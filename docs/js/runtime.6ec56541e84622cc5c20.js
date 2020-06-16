@@ -74,7 +74,7 @@
     (l.o = function (e, r) {
       return Object.prototype.hasOwnProperty.call(e, r);
     }),
-    (l.p = '/');
+    (l.p = './');
   var f = (window.webpackJsonp = window.webpackJsonp || []),
     i = f.push.bind(f);
   (f.push = r), (f = f.slice());
