@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRate, selectFetchingState } from '../../store/reducers/rates';
+import { fetchRate } from '../../store/reducers/rates';
 import { formatDate } from '../../utils/api-helpers';
 
 import RateTab from '../RateTab';
@@ -20,14 +20,15 @@ const FilledTab = styled(RateTab)`
 const RateTabs = ({ className, from, to, date }) => {
   const dispatch = useDispatch();
   const formattedDate = formatDate(date);
-  const isFetching = useSelector(selectFetchingState);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchRate(from, to, date));
+    setIsLoading(true);
+    dispatch(fetchRate(from, to, date)).then(setIsLoading(false));
   }, []);
 
   const ratesList = useSelector((state) => {
-    if (isFetching) {
+    if (isLoading) {
       return null;
     }
 

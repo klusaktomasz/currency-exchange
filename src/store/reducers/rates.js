@@ -7,7 +7,6 @@ export const ratesSlice = createSlice({
   name: 'rates',
   initialState: {
     error: false,
-    isFetching: false,
     rates: {},
   },
   reducers: {
@@ -71,8 +70,6 @@ export const fetchRate = (from, to = null, date = Date.now()) => async (
     return;
   }
 
-  dispatch(setFetchingState(true));
-
   try {
     const res = await fetch(createAPIURLToRate(from, to, date));
     const data = await res.json();
@@ -90,10 +87,6 @@ export const fetchRate = (from, to = null, date = Date.now()) => async (
     dispatch(setFetchingError(true));
     console.error(e);
   }
-
-  dispatch(setFetchingState(false));
 };
-
-export const selectFetchingState = (state) => state.rates.isFetching;
 
 export default ratesSlice.reducer;

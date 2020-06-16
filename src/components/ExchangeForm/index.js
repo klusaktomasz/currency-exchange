@@ -58,6 +58,8 @@ const ExchangeForm = () => {
   const [convertedAmount, setConvertedAmount] = useState(1.0);
   const [fromCurrency, setFromCurrency] = useState(DEFAULT_EXCHANGE.from.value);
   const [toCurrency, setToCurrency] = useState(DEFAULT_EXCHANGE.to.value);
+  const [isLoading, setIsLoading] = useState(false);
+
   const exchangeRate = useSelector((state) => {
     if (fromCurrency === toCurrency) {
       return 1;
@@ -67,8 +69,6 @@ const ExchangeForm = () => {
       toCurrency
     ];
   });
-  const isLoading = useSelector((state) => state.rates.isFetching);
-
   const currenciesOptions = useSelector((state) => {
     const { list } = state.currencies;
 
@@ -99,7 +99,8 @@ const ExchangeForm = () => {
 
     // Fetch needed rate if not in store.
     if (typeof exchangeRate === 'undefined') {
-      dispatch(fetchRate(fromCurrency, toCurrency));
+      setIsLoading(true);
+      dispatch(fetchRate(fromCurrency, toCurrency)).then(setIsLoading(false));
       return;
     }
 
