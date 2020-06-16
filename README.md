@@ -1,5 +1,5 @@
 # Currency Exchange
-Demo: (Not ready yet!)
+Demo: https://klusaktomasz.github.io/currency-exchange/
 
 A simple hello world app that allows checking currency rates using React, Redux Toolkit, Styled Components and Frankfurter API.
 
