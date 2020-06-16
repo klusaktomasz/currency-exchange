@@ -61,12 +61,19 @@ const App = () => {
   const [renderRateTabs, setRenderRateTabs] = useState(false);
   const [ratesTo, setRatesTo] = useState(DEFAULT_RATES.to);
 
-  const shouldRenderTabs = () => {
+  function shouldRenderTabs() {
     setRenderRateTabs(window.innerWidth >= 400);
 
     const rateTabsAmount = Math.floor(window.innerWidth / 200);
     setRatesTo(DEFAULT_RATES.to.slice(0, rateTabsAmount));
-  };
+  }
+
+  useEffect(() => {
+    dispatch(getCurrenciesList());
+    dispatch(getStateFromLocal());
+
+    shouldRenderTabs();
+  }, []);
 
   useEffect(() => {
     window.addEventListener('resize', shouldRenderTabs);
@@ -75,13 +82,6 @@ const App = () => {
       window.removeEventListener('resize', shouldRenderTabs);
     };
   });
-
-  useEffect(() => {
-    dispatch(getCurrenciesList());
-    dispatch(getStateFromLocal());
-
-    shouldRenderTabs();
-  }, []);
 
   return (
     <>

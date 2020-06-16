@@ -72,6 +72,7 @@ const ExchangeForm = () => {
       toCurrency
     ];
   });
+
   const currenciesOptions = useSelector((state) => {
     const { list } = state.currencies;
 
@@ -81,19 +82,19 @@ const ExchangeForm = () => {
     }));
   });
 
-  const handleAmountChange = (e) => {
+  function handleAmountChange(e) {
     // Change , to .
     const input = e.target.value.split(',').join('.');
     setFromAmount(input);
-  };
+  }
 
-  const handleFromCurrencyChange = ({ value: currency }) => {
+  function handleFromCurrencyChange({ value: currency }) {
     setFromCurrency(currency);
-  };
+  }
 
-  const handleToCurrencyChange = ({ value: currency }) => {
+  function handleToCurrencyChange({ value: currency }) {
     setToCurrency(currency);
-  };
+  }
 
   useEffect(() => {
     if (isLoading) {

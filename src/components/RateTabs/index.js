@@ -20,13 +20,8 @@ const FilledTab = styled(RateTab)`
 
 const RateTabs = ({ className, from, to, date }) => {
   const dispatch = useDispatch();
-  const formattedDate = formatDate(date);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    dispatch(fetchRate(from, to, date)).then(setIsLoading(false));
-  }, []);
+  const formattedDate = formatDate(date);
 
   const ratesList = useSelector((state) => {
     if (isLoading) {
@@ -46,6 +41,11 @@ const RateTabs = ({ className, from, to, date }) => {
       />
     ));
   });
+
+  useEffect(() => {
+    setIsLoading(true);
+    dispatch(fetchRate(from, to, date)).then(setIsLoading(false));
+  }, []);
 
   return <Wrapper className={className}>{ratesList}</Wrapper>;
 };
