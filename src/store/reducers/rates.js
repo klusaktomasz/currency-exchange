@@ -67,6 +67,10 @@ export const getStateFromLocal = () => (dispatch) => {
 export const fetchRate = (from, to = null, date = Date.now()) => async (
   dispatch
 ) => {
+  if (from === to) {
+    return;
+  }
+
   dispatch(setFetchingState(true));
 
   try {
@@ -91,6 +95,5 @@ export const fetchRate = (from, to = null, date = Date.now()) => async (
 };
 
 export const selectFetchingState = (state) => state.rates.isFetching;
-export const selectAllRates = (state) => state.rates.rates;
 
 export default ratesSlice.reducer;

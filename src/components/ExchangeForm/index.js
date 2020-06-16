@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ReactSelect from 'react-select';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import colors from '../../utils/colors';
 import inputMixin from '../../mixins/input';
 
+import { formatDate } from '../../utils/api-helpers';
 import { DEFAULT_EXCHANGE } from '../../config';
+import { fetchRate } from '../../store/reducers/rates';
 
 const Form = styled.form`
   color: ${colors.black};
@@ -51,6 +53,22 @@ const CurrenciesSelect = styled(ReactSelect)`
 `;
 
 const ExchangeForm = () => {
+  const dispatch = useDispatch();
+  const [fromAmount, setFromAmount] = useState(1.0);
+  const [convertedAmount, setConvertedAmount] = useState(1.0);
+  const [fromCurrency, setFromCurrency] = useState(DEFAULT_EXCHANGE.from.value);
+  const [toCurrency, setToCurrency] = useState(DEFAULT_EXCHANGE.to.value);
+  const exchangeRate = useSelector((state) => {
+    if (fromCurrency === toCurrency) {
+      return 1;
+    }
+
+    return state.rates.rates[fromCurrency]?.[formatDate(Date.now())]?.[
+      toCurrency
+    ];
+  });
+  const isLoading = useSelector((state) => state.rates.isFetching);
+
   const currenciesOptions = useSelector((state) => {
     const { list } = state.currencies;
 
@@ -58,6 +76,40 @@ const ExchangeForm = () => {
       value: el[0],
       label: `(${el[0]}) ${el[1]}`,
     }));
+  });
+
+  const handleAmountChange = (e) => {
+    // Change , to .
+    const input = e.target.value.split(',').join('.');
+    setFromAmount(input);
+  };
+
+  const handleFromCurrencyChange = ({ value: currency }) => {
+    setFromCurrency(currency);
+  };
+
+  const handleToCurrencyChange = ({ value: currency }) => {
+    setToCurrency(currency);
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    // Fetch needed rate if not in store.
+    if (typeof exchangeRate === 'undefined') {
+      dispatch(fetchRate(fromCurrency, toCurrency));
+      return;
+    }
+
+    // Make sure amount is a number.
+    if (Number.isNaN(Number(fromAmount))) {
+      setConvertedAmount(0);
+      return;
+    }
+
+    setConvertedAmount(fromAmount * exchangeRate);
   });
 
   return (
@@ -69,6 +121,7 @@ const ExchangeForm = () => {
             options={currenciesOptions}
             defaultValue={DEFAULT_EXCHANGE.from}
             classNamePrefix="react-select"
+            onChange={handleFromCurrencyChange}
           />
         </Label>
         <Label>
@@ -77,7 +130,12 @@ const ExchangeForm = () => {
             Not using type=number due to a11y
             (https://design-system.service.gov.uk/components/text-input/#asking-for-decimal-numbers)
            */}
-          <InputAmount type="text" pellcheck="false" />
+          <InputAmount
+            value={fromAmount}
+            onChange={handleAmountChange}
+            type="text"
+            pellcheck="false"
+          />
         </Label>
       </Box>
       <Box>
@@ -87,11 +145,12 @@ const ExchangeForm = () => {
             options={currenciesOptions}
             defaultValue={DEFAULT_EXCHANGE.to}
             classNamePrefix="react-select"
+            onChange={handleToCurrencyChange}
           />
         </Label>
         <Label>
           Exchanged Amount
-          <OutputAmount>1.00</OutputAmount>
+          <OutputAmount>{convertedAmount}</OutputAmount>
         </Label>
       </Box>
     </Form>
