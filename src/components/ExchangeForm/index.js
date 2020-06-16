@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import ReactSelect from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
+
+import styled from 'styled-components';
 import colors from '../../utils/colors';
 import inputMixin from '../../mixins/input';
 
-import { formatDate } from '../../utils/api-helpers';
-import { DEFAULT_EXCHANGE } from '../../config';
+import ReactSelect from 'react-select';
+
 import { fetchRate } from '../../store/reducers/rates';
+import { formatDate } from '../../utils/api-helpers';
+
+import { DEFAULT_EXCHANGE } from '../../config';
 
 const Form = styled.form`
   color: ${colors.black};

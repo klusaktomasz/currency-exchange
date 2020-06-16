@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import styled, { createGlobalStyle } from 'styled-components';
-import 'normalize.css';
 import colors from './utils/colors';
-import { getCurrenciesList } from './store/reducers/currencies';
-import { getStateFromLocal } from './store/reducers/rates';
+import 'normalize.css';
+
 import RateTabs from './components/RateTabs';
 import ExchangeForm from './components/ExchangeForm';
+
+import { getCurrenciesList } from './store/reducers/currencies';
+import { getStateFromLocal } from './store/reducers/rates';
+
 import { DEFAULT_RATES } from './config';
 
 const GlobalStyle = createGlobalStyle`

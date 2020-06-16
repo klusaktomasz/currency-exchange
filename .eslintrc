@@ -24,6 +24,7 @@
   "rules": {
     "react/jsx-filename-extension": 0,
     "no-param-reassign": 0,
+    "import/order": 0,
     "no-debugger": 1,
     "react/prop-types":[1, {
       "ignore": ["className"]

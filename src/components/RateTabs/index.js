@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRate } from '../../store/reducers/rates';
-import { formatDate } from '../../utils/api-helpers';
+
+import styled from 'styled-components';
 
 import RateTab from '../RateTab';
+
+import { fetchRate } from '../../store/reducers/rates';
+import { formatDate } from '../../utils/api-helpers';
 
 const Wrapper = styled.div`
   display: flex;
