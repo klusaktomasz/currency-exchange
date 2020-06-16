@@ -85,7 +85,6 @@ export const fetchRate = (from, to = null, date = Date.now()) => async (
     dispatch(saveStateToLocal());
   } catch (e) {
     dispatch(setFetchingError(true));
-    console.error(e);
   }
 };
 

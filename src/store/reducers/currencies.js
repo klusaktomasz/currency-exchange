@@ -69,7 +69,6 @@ export const fetchCurrenciesList = () => async (dispatch) => {
     dispatch(saveListToLocalStorage(data));
   } catch (e) {
     dispatch(setFetchingError(true));
-    console.error(e);
   }
 
   dispatch(setFetchingState(false));

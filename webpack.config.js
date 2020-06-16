@@ -12,7 +12,7 @@ module.exports = (_env, argv) => {
     devtool: isDev && 'cheap-module-source-map',
     entry: './src/index.js',
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'docs'),
       filename: 'js/[name].[contenthash].js',
       publicPath: '/',
     },
@@ -32,14 +32,15 @@ module.exports = (_env, argv) => {
               },
             },
             {
-              loader: 'eslint-loader'
-            }
+              loader: 'eslint-loader',
+            },
           ],
         },
         {
           test: /\.css$/i,
-          use: ['style-loader', 'css-loader']
-        }
+          exclude: /docs/,
+          use: ['style-loader', 'css-loader'],
+        },
       ],
     },
     plugins: [
@@ -47,7 +48,7 @@ module.exports = (_env, argv) => {
         template: path.resolve(__dirname, 'public/index.html'),
       }),
       new StylelintPlugin({
-        files: '**/*.js',
+        files: 'src/**/*.js',
       }),
       new CopyPlugin([
         {
