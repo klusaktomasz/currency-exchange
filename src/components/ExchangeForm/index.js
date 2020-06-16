@@ -34,11 +34,13 @@ const Label = styled.label`
 
 const InputAmount = styled.input`
   ${inputMixin}
+  border-color: ${(props) => (props.error ? colors.redSoft : colors.graySoft)}
 `;
 
 const OutputAmount = styled.output`
   ${inputMixin}
   background: ${colors.whiteSoftDark};
+  border-color: ${(props) => (props.error ? colors.redSoft : colors.graySoft)}
 `;
 
 const CurrenciesSelect = styled(ReactSelect)`
@@ -62,6 +64,7 @@ const ExchangeForm = () => {
   const [fromCurrency, setFromCurrency] = useState(DEFAULT_EXCHANGE.from.value);
   const [toCurrency, setToCurrency] = useState(DEFAULT_EXCHANGE.to.value);
   const [isLoading, setIsLoading] = useState(false);
+  const [inputError, setInputError] = useState(false);
 
   const exchangeRate = useSelector((state) => {
     if (fromCurrency === toCurrency) {
@@ -85,7 +88,19 @@ const ExchangeForm = () => {
   function handleAmountChange(e) {
     // Change , to .
     const input = e.target.value.split(',').join('.');
+    const validateInput = Number.isNaN(Number(input));
+
     setFromAmount(input);
+    // Validate if there is number valid number.
+    setInputError(validateInput);
+  }
+
+  function handleEndOfFocusInput(e) {
+    const input = e.target.value;
+
+    if (input === '') {
+      setFromAmount('0');
+    }
   }
 
   function handleFromCurrencyChange({ value: currency }) {
@@ -97,7 +112,7 @@ const ExchangeForm = () => {
   }
 
   useEffect(() => {
-    if (isLoading) {
+    if (isLoading || inputError) {
       return;
     }
 
@@ -105,12 +120,6 @@ const ExchangeForm = () => {
     if (typeof exchangeRate === 'undefined') {
       setIsLoading(true);
       dispatch(fetchRate(fromCurrency, toCurrency)).then(setIsLoading(false));
-      return;
-    }
-
-    // Make sure amount is a number.
-    if (Number.isNaN(Number(fromAmount))) {
-      setConvertedAmount(0);
       return;
     }
 
@@ -138,8 +147,10 @@ const ExchangeForm = () => {
           <InputAmount
             value={fromAmount}
             onChange={handleAmountChange}
+            onBlur={handleEndOfFocusInput}
             type="text"
             pellcheck="false"
+            error={inputError}
           />
         </Label>
       </Box>
@@ -155,7 +166,7 @@ const ExchangeForm = () => {
         </Label>
         <Label>
           Exchanged Amount
-          <OutputAmount>{convertedAmount}</OutputAmount>
+          <OutputAmount error={inputError}>{convertedAmount}</OutputAmount>
         </Label>
       </Box>
     </Form>

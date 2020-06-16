@@ -9,4 +9,5 @@ export default {
   gray: '#6c7589',
   graySoft: '#e5e5e5',
   oceanicBlue: '#0f7baa',
+  redSoft: '#c1525c',
 };
