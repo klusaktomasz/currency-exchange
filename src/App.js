@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-
-// Styles
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import 'normalize.css';
 import colors from './utils/colors';
-
-// Dispatches
 import { getCurrenciesList } from './store/reducers/currencies';
 import { getStateFromLocal } from './store/reducers/rates';
-
-// Routes
-import Home from './views/Home';
+import RateTabs from './components/RateTabs';
+import ExchangeForm from './components/ExchangeForm';
+import { DEFAULT_RATES } from './config';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -28,20 +23,81 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const HomeContainer = styled.div`
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const H1 = styled.h1`
+  font-weight: 500;
+  font-size: 3em;
+  text-align: center;
+  line-height: 1em;
+  width: 100%;
+`;
+
+const Divider = styled.span`
+  display: block;
+  text-align: center;
+  font-size: 0.75em;
+`;
+
+const FixedRateTabs = styled(RateTabs)`
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+
 const App = () => {
   const dispatch = useDispatch();
+  const [renderRateTabs, setRenderRateTabs] = useState(false);
+  const [ratesTo, setRatesTo] = useState(DEFAULT_RATES.to);
+
+  const shouldRenderTabs = () => {
+    setRenderRateTabs(window.innerWidth >= 400);
+
+    const rateTabsAmount = Math.floor(window.innerWidth / 200);
+    setRatesTo(DEFAULT_RATES.to.slice(0, rateTabsAmount));
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', shouldRenderTabs);
+
+    return () => {
+      window.removeEventListener('resize', shouldRenderTabs);
+    };
+  });
+
   useEffect(() => {
     dispatch(getCurrenciesList());
     dispatch(getStateFromLocal());
+
+    shouldRenderTabs();
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
       <GlobalStyle />
-      <Switch>
-        <Route path="/" component={Home} />
-      </Switch>
-    </BrowserRouter>
+
+      <HomeContainer>
+        <H1>
+          Currency <Divider>Exchange</Divider>
+        </H1>
+        <ExchangeForm />
+      </HomeContainer>
+
+      {renderRateTabs ? (
+        <FixedRateTabs
+          from={DEFAULT_RATES.from}
+          to={ratesTo}
+          date={Date.now()}
+        />
+      ) : null}
+    </>
   );
 };
 export default App;
